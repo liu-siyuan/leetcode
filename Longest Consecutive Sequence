@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int> &num) {
+        unordered_map<int, bool> used;
+        
+        for (auto i:num)
+        {
+            used[i] = false;
+        }
+        
+        int longest = 0;
+        
+        for(auto i:num)
+        {
+            if (used[i] == true) 
+                continue;
+        
+            used[i] = true;
+            int lenth = 1;      //初始化1
+            
+            for(int j = i+1; used.find(j) != used.end(); j++)
+            {
+                used[j] = true;
+                lenth++;
+            }
+            
+            for(int j = i-1; used.find(j) != used.end(); j--)
+            {
+                used[j] = true;
+                lenth++;
+            }
+            
+            longest = max(longest, lenth);
+        }
+        
+        return longest;
+    }
+};
