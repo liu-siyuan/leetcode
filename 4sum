@@ -1,0 +1,53 @@
+//时间复杂度O(n^3)。注意用的是地址还是数值
+class Solution {
+public:
+    vector<vector<int> > fourSum(vector<int> &num, int target) {
+        vector<vector<int>> result;
+        
+        if (num.size() < 4)
+        {
+            return result;
+        }
+        
+        sort (num.begin(), num.end());
+        auto last = num.end();
+        for (auto a = num.begin(); a < prev(last, 3); a++)
+        {
+            if (a > num.begin() && *a == *prev(a))
+            {
+                continue;
+            }
+            for(auto b = next(a); b < prev(last, 2); b++)
+            {
+                if (b > next(a) && *b == *prev(b))
+                {
+                    continue;
+                }
+                auto c = next(b);
+                auto d = prev(last);
+                while (c < d)
+                {
+                    if (*a + *b + *c + *d == target)
+                    {
+                        result.push_back ({*a, *b, *c, *d});
+                        c++;
+                        d--;
+                        while (c < d && *c == *prev(c)) c++;
+                        while (c < d && *d == *next(d)) d--;
+                    }
+                    else if (*a + *b + *c + *d > target)
+                    {
+                        d--;
+                    }
+                    else
+                    {
+                        c++;
+                    }
+                }
+            }
+        }
+        //sort (result.begin(), result.end());
+        //result.erase(unique(result.begin(), result.end()), result.end());
+        return result;
+    }
+};
