@@ -1,0 +1,39 @@
+class Solution {
+public:
+    void nextPermutation(vector<int> &num) {
+        next_permutation(num.begin(), num.end());
+    }
+    
+    template<typename BidiIt>
+    
+    bool next_Permutation(BidiIt first, BidiIt last)
+    {
+        //使用反向迭代器方便些
+        auto rfirst = reverse_iterator<BidiIt>(last);
+        auto rlast = reverse_iterator<BidiIt>(first);
+        
+        auto pivot = next(rfirst);//从倒数第二开始
+        
+        //step 1 从右往左，找到第一个非升序的数
+        while (pivot != rlast && *pivot >= prev(pivot))
+        {
+            pivot++;
+        }
+        if (pivot == rlast)//未找到，直接倒置
+        {
+            reverse (first, last);
+            return false;
+        }
+        
+        //step 2 从右往左，找到第一个比这个数大的数
+        auto change = find_if(rfirst, rlast, bind1st(less<int>(), *pivot));
+        
+        //setp 3 交换两数
+        swep(*change, *pivot);
+        
+        //step 4 右侧升序排列
+        reverse (rfirst, pivot);
+        
+        return true;
+    }
+};
