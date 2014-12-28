@@ -1,0 +1,46 @@
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        string s(n, '0');
+        
+        for (int i=0; i<n; i++)
+        {
+            s[i] += i+1;
+        }
+        
+        return kth_permutation (s, k);
+    }
+    
+private:
+    int facterial (int n)
+    {
+        int result = 1;
+        for (int i=1; i<=n; i++)
+        {
+            result *= i;
+        }
+        return result;
+    }
+    
+    template <typename Sequence>//已经给好第一个序列
+    Sequence kth_permutation (Sequence &seq, int k)
+    {
+        Sequence S(seq);
+        Sequence result;
+        const int n = seq.size();
+        int base = facterial(n-1);
+        
+        k--;//从0开始算
+        for (int i=1; i<= n-1; i++)
+        {
+            auto a = next (S.begin(), k/base);
+            result.push_back(*a);
+            S.erase(a);
+            
+            k %= base;
+            base /= n-i;
+        }
+        result.push_back(S[0]);
+        return result;
+    }
+};
