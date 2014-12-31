@@ -1,0 +1,40 @@
+class Solution {
+public:
+    void setZeroes(vector<vector<int> > &matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        
+        vector<bool> row_has_zero(m, false);//标记该行是否有0
+        vector<bool> col_has_zero(n, false);//标记该列是否有0
+        
+        for(int i=0; i<m; i++)
+        {
+            for(int j=0; j<n; j++)
+            {
+                if (matrix[i][j] == 0)
+                {
+                    row_has_zero [i] = col_has_zero [j] = true;
+                }
+            }
+        }
+        
+        for (int i=0; i<m; i++)
+        {
+            if (row_has_zero [i])
+            {
+                fill (&matrix[i][0], &matrix[i][0]+n, 0);
+            }
+        }
+        
+        for (int j=0; j<n; j++)
+        {
+            if(col_has_zero [j])
+            {
+                for(int i=0; i<m; i++)
+                {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+};
