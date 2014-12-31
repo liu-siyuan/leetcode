@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> grayCode(int n) {
+        vector<int> result;
+        const int size = 1<<n;//pow(2,n)
+        
+        for(int i=0; i<size; i++)
+        {
+            result.push_back(binary_to_gray(i));
+        }
+        
+        return result;
+}
+private:      
+        unsigned int binary_to_gray(unsigned int binary)
+        {
+            return binary ^ (binary>>1);
+        }
+};
