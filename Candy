@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int candy(vector<int> &ratings) {
+        int n = ratings.size();//everyone at least one
+        vector<int> increase(n,0);
+        
+        for (int i=1, inc = 1; i<ratings.size(); i++)
+        {
+            if (ratings[i] > ratings[i-1])
+            {
+                increase[i] = max(inc++, increase[i]);
+            }
+            else 
+            {
+                inc = 1;
+            }
+        }
+        
+        for (int i=ratings.size()-2, inc=1; i>=0; i--)//careful! count from last 2, the index should be n-2
+        {
+            if (ratings[i] > ratings[i+1])
+            {
+                increase[i] = max(inc++, increase[i]);
+            }
+            else
+            {
+                inc = 1;
+            }
+        }
+        return accumulate(increase.begin(), increase.end(), n);
+    }
+};
