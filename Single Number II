@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int singleNumber(int A[], int n) {
+        int totalsize = sizeof(int) * 8;//sizeof return count in bytes, should *8!
+        vector<int> count(totalsize, 0);
+        int result = 0;
+        
+        for (int i=0; i<n; i++)
+        {
+            for (int j=0; j<totalsize; j++)
+            {
+                count[j] += (A[i] >> j) &1;
+            }
+        }
+        
+        for (int j=0; j<totalsize; j++)
+        {
+            count[j] %= 3;
+        }
+        
+        for (int j=0; j<totalsize; j++)
+        {
+            result += count[j]<<j;
+        }
+        
+        return result;
+    }
+};
