@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int canCompleteCircuit(vector<int> &gas, vector<int> &cost) {
+        int j = -1;
+        int total = 0;
+        
+        for (int i=0, sum=0; i<gas.size(); i++)
+        {
+            sum += gas[i] - cost[i];//sum indicate the index
+            total += gas[i] - cost[i];//total show if it can traver around or not
+            if (sum < 0)
+            {
+                j = i;
+                sum = 0;
+            }
+        }
+        return total>=0? j+1: -1;
+    }
+};
