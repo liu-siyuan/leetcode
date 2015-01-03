@@ -23,11 +23,11 @@ public:
         prev = head2->next;
         cur = prev->next;
         
-        for (int i=m; i<n; i++)
+        for (int i=m; i<n; i++)//watch out the sequence
         {
             prev->next = cur->next;
             cur->next = head2->next;
-            head2->next = cur;
+            head2->next = cur;//head insert
             cur = prev->next;
         }
         
