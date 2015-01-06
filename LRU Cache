@@ -1,0 +1,51 @@
+class LRUCache{
+private:
+    struct CacheNode{
+        int key;
+        int value;
+        CacheNode (int k, int v): key(k), value(v){}
+    };
+    
+    list<CacheNode> cachelist;
+    unordered_map <int, list<CacheNode>::iterator> cacheMap;
+    int capacity;
+    
+public:
+    LRUCache(int capacity) {
+        this->capacity = capacity;
+    }
+    
+    int get(int key) {
+        if (cacheMap.find(key) == cacheMap.end())
+        {
+            return -1;
+        }
+        
+        cachelist.splice (cachelist.begin(), cachelist, cacheMap[key]);
+        cacheMap[key] = cachelist.begin();
+        return cacheMap[key]->value;
+        
+    }
+    
+    void set(int key, int value) {
+        if (cacheMap.find(key) == cacheMap.end())
+        {
+            if (cacheMap.size() == capacity)
+            {
+                cacheMap.erase(cachelist.back().key);
+                cachelist.pop_back();
+            }
+            //插入新节点在链表头部，并更新map对应值
+            cachelist.push_front(CacheNode(key, value));
+            cacheMap[key] = cachelist.begin();
+        }
+        else
+        {
+            //更新节点值，并将其移到链表头部，更新map中的地址
+            cacheMap[key]->value = value;
+            cachelist.splice (cachelist.begin(), cachelist, cacheMap[key]);
+            cacheMap[key] = cachelist.begin();
+        }
+    }
+
+};
