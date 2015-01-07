@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string longestCommonPrefix(vector<string> &strs) {
+        if (strs.empty())
+        {
+            return "";
+        }
+        
+        const int row = strs.size();
+        const int col = strs[0].size();
+        
+        for (int col_index = 0; col_index<col; col_index++)
+        {
+            for (int row_index = 1; row_index < row; row_index++)
+            {
+                if (strs[row_index][col_index] != strs[0][col_index])
+                {
+                    return strs[0].substr(0, col_index);
+                }
+            }
+        }
+        return strs[0];
+    }
+};
