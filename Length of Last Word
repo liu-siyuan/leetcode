@@ -1,0 +1,9 @@
+class Solution {
+public:
+    int lengthOfLastWord(const char *s) {
+        const string str(s);
+        auto i = find_if (str.rbegin(), str.rend(), ::isalpha);
+        auto j = find_if_not (i, str.rend(), ::isalpha);
+        return distance (i, j);
+    }
+};
