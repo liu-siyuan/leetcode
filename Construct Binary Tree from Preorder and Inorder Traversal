@@ -1,0 +1,34 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
+        return buildtree(begin(preorder), end(preorder), 
+                        begin(inorder), end(inorder));
+    }
+template <typename InputIterator>
+    TreeNode *buildtree(InputIterator pre_first, InputIterator pre_last, 
+                        InputIterator ino_first, InputIterator ino_last)
+    {
+        if (pre_first == pre_last) return nullptr;
+        if (ino_first == ino_last) return nullptr;
+        
+        auto root = new TreeNode(*pre_first);
+        
+        auto ino_RootPos = find (ino_first, ino_last, *pre_first);
+        auto leftsize = distance (ino_first, ino_RootPos);
+        
+        root -> left = buildtree (next(pre_first), next(pre_first, leftsize+1), 
+                                ino_first, next(ino_first, leftsize));
+        root -> right = buildtree (next(pre_first, leftsize+1), pre_last, 
+                                next(ino_RootPos), ino_last);
+        return root;
+    }
+};
