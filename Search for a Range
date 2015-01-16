@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<int> searchRange(int A[], int n, int target) {
+        auto lower = lowerbound(A, A+n, target);
+        auto upper = upperbound(lower, A+n, target);
+        
+        if (lower == A + n || *lower != target)
+        {
+            return vector<int> {-1, -1};
+        }
+        return vector<int>{distance(A, lower), distance(A, prev(upper))};
+    }
+template<typename ForwardIterator, typename T>
+    ForwardIterator lowerbound(ForwardIterator first, ForwardIterator last, T value)
+    {
+        while (first != last)
+        {
+            auto mid = next (first, distance(first,last)/2);
+            if (value > *mid)
+            {
+                first = mid + 1;
+            }
+            else
+            {
+                last = mid;
+            }
+        }
+        return first;
+    }
+    
+    template<typename ForwardIterator, typename T>
+    ForwardIterator upperbound(ForwardIterator first, ForwardIterator last, T value)
+    {
+        while (first != last)
+        {
+            auto mid = next (first, distance(first,last)/2);
+            if (value >= *mid)
+            {
+                first = mid + 1;
+            }
+            else
+            {
+                last = mid;
+            }
+        }
+        return first;
+    }
+};
