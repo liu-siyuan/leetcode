@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int searchInsert(int A[], int n, int target) {
+        return lowerbound(A, A+n, target) - A;
+    }
+private:
+    template<typename ForwardIterator, typename T>
+    ForwardIterator lowerbound(ForwardIterator first, ForwardIterator last, T target)
+    {
+        while (first != last)
+        {
+            auto mid = first + distance(first, last)/2;
+            if (*mid >= target)
+            {
+                last = mid;
+            }
+            else 
+            {
+                first = ++mid;
+            }
+        }
+        return first;
+    }
+};
