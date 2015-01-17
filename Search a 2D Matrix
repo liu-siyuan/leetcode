@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int> > &matrix, int target) {
+        if (matrix.empty())
+        {
+            return false;
+        }
+        size_t m = matrix.size();
+        size_t n = matrix[0].size();
+        
+        int first = 0;
+        int last = m*n;
+        
+        while (first != last)
+        {
+            int mid = first + (last - first)/2;
+            int value = matrix[mid / n][mid % n];
+            
+            if (value == target)
+            {
+                return true;
+            }
+            if (value > target)
+            {
+                last = mid;
+            }
+            else
+            {
+                first = ++mid;
+            }
+        }
+        return false;
+    }
+};
