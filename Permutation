@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<vector<int> > permute(vector<int> &num) {
+        sort(num.begin(), num.end());
+        vector<vector<int>> result;
+        vector<int> next;
+        do
+        {
+            result.push_back(num);
+        }while(next_permutation(num.begin(), num.end()));
+        return result;
+    }
+    template<typename it>
+    bool next_permutation(it first, it last)
+    {
+        auto rfirst = reverse_iterator<it>(last);
+        auto rlast = reverse_iterator<it>(first);
+        auto pivot = next(rfirst);
+        
+        while(rfirst != rlast && *pivot >= *prev(pivot))
+        {
+            pivot++;
+        }
+        if (pivot == rlast)
+        {
+            return false;
+        }
+        auto change = find_if(rfirst, rlast, bind1st(less<int>(), *pivot));
+        swap (*change, *pivot);
+        reverse(rfirst, pivot);
+        return true;
+    }
+};
